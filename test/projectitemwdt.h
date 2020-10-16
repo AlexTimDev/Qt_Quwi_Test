@@ -16,6 +16,8 @@ public:
     explicit ProjectItemWdt(QJsonObject obj, QWidget *parent = nullptr);
     ~ProjectItemWdt();
 
+    int getId();
+    void setName(QString name);
 signals:
     void onClick(int);
 

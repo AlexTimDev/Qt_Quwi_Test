@@ -16,13 +16,22 @@ ProjectItemWdt::~ProjectItemWdt()
 {
     delete ui;
 }
+int ProjectItemWdt::getId()
+{
+    int id = itemObj.value("id").toInt();
+    return id;
+}
+void ProjectItemWdt::setName(QString name)
+{
+    ui->nameLbl->setText(name);
+}
 void ProjectItemWdt::showEvent(QShowEvent *event)
 {
     QString logoUrl = itemObj.value("logo_url").toString();
     QPixmap logoImage = g_pServerApi->downloadImage(logoUrl);
     ui->logoLbl->setPixmap(logoImage);
     QString name = itemObj.value("name").toString();
-    ui->nameLbl->setText(name);
+    setName(name);
     int isActive = itemObj.value("is_active").toInt();
     ui->stateLbl->setText(isActive==1 ? "Active": "Inactive");
     if (!isActive) ui->stateLbl->setStyleSheet("QLabel { color : darkred; font-size: 18px; }");

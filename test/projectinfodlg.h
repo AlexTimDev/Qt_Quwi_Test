@@ -20,6 +20,9 @@ public:
 protected:
     void showEvent(QShowEvent *event);
 
+signals:
+    void updatedName(int, QString);
+
 protected slots:
     void on_okBtn_clicked();
 

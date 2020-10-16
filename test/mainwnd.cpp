@@ -42,8 +42,10 @@ void Mainwnd::loadProjects()
     foreach (const QJsonValue & v, projAry) {
         QJsonObject itemObj = v.toObject();
         ProjectItemWdt *projectItem = new ProjectItemWdt(itemObj, ui->projectList);
+        int id = itemObj.value("id").toInt();
         connect(projectItem, SIGNAL(onClick(int)), this, SLOT(on_projectItem_clicked(int)));
         listLayout->addWidget( projectItem, 0, Qt::AlignCenter);
+        m_itemLst[id] = projectItem;
     }
 }
 void Mainwnd::showEvent(QShowEvent *event)
@@ -54,6 +56,7 @@ void Mainwnd::on_projectItem_clicked(int id)
 {
     m_pProjInfoDlg->setProjectId(id);
     m_pProjInfoDlg->show();
+    connect(m_pProjInfoDlg, SIGNAL(updatedName(int, QString)), this, SLOT(on_projectName_updated(int, QString)));
 }
 void Mainwnd::on_projectsBtn_clicked()
 {
@@ -61,4 +64,11 @@ void Mainwnd::on_projectsBtn_clicked()
 void Mainwnd::on_logoutBtn_clicked()
 {
     g_app->showLoginDlg();
+}
+void Mainwnd::on_projectName_updated(int id, QString strName)
+{
+    ProjectItemWdt *projectItem = m_itemLst[id];
+    if (projectItem) {
+        projectItem->setName(strName);
+    }
 }

@@ -65,10 +65,15 @@ void ProjectInfoDlg::on_okBtn_clicked()
     QString name = ui->nameEdt->text();
     QUrlQuery reqData;
     reqData.addQueryItem("name", name);
+    ui->okBtn->setText("...");
+    ui->okBtn->setDisabled(true);
     QJsonObject resObj = g_pServerApi->updateProject(m_projId, reqData);
-    qDebug() << "updateProject:" << resObj;
-    QMessageBox msgBox;
-    msgBox.setText("The name of project is updated.");
-    msgBox.exec();
+    ui->okBtn->setText("OK");
+    ui->okBtn->setDisabled(false);
+
+    emit(updatedName(m_projId, name));
+//    QMessageBox msgBox;
+//    msgBox.setText("The name of project is updated.");
+//    msgBox.exec();
 
 }

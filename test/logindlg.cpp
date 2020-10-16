@@ -27,15 +27,20 @@ void LoginDlg::on_loginBtn_clicked()
     QString strEmail = ui->emailEdt->text();
     QString strPassword = ui->passwordEdt->text();
 
+    ui->loginBtn->setText("Logining...");
+    ui->loginBtn->setDisabled(true);
     QJsonObject resObj = g_pServerApi->login(strEmail, strPassword);
+    ui->loginBtn->setText("Login");
+    ui->loginBtn->setDisabled(false);
+
     QJsonValue tokenValue = resObj.value("token");
 
     if (tokenValue.isNull() || tokenValue.isUndefined()) {
         QMessageBox msgBox(QMessageBox::Warning, "Warning", "Incorrect email or password.");
         msgBox.exec();
     } else {
-        QMessageBox msgBox(QMessageBox::Information, "OK", "You are certificated.");
-        msgBox.exec();
+//        QMessageBox msgBox(QMessageBox::Information, "OK", "You are certificated.");
+//        msgBox.exec();
         accept();
     }
 }

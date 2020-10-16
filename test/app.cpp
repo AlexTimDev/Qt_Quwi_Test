@@ -15,6 +15,6 @@ void App::showLoginDlg() {
     }
 }
 void App::showMainWnd() {
-    loginDlg.close();
     mainWnd.show();
+    loginDlg.close();
 }
